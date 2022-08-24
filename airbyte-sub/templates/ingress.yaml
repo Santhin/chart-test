@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: airbyte-ingress
+  labels:
+    name: airbyte-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: airbyte
+    ingress.gcp.kubernetes.io/pre-shared-cert: airbyte
+spec:
+  defaultBackend:
+    service:
+      name: airbyte-webapp
+      port:
+        number: 80
+  rules:
+  - http:
+      paths:
+      - pathType: ImplementationSpecific
+        path: "/*"
+        backend:
+          service:
+            name: airbyte-webapp
+            port: 
+              number: 80
